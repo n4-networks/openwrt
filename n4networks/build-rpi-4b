@@ -1,0 +1,28 @@
+#! /bin/sh
+
+cd ../
+
+./scripts/feeds update -a
+
+# do not install all packages, never execute ./scripts/feeds install -a
+
+./scripts/feeds install libpam
+./scripts/feeds install libcap-ng
+./scripts/feeds install libnetsnmp
+./scripts/feeds install luci
+./scripts/feeds install -a -p routing
+./scripts/feeds install -a -p telephony
+./scripts/feeds install sqlite3
+./scripts/feeds install curl
+./scripts/feeds install c-ares
+./scripts/feeds install liblzma
+
+mkdir -p package/feeds/obuspa
+cp n4networks/Makefile.obuspa package/feeds/obuspa/Makefile
+
+./scripts/feeds install obuspa
+
+cp n4networks/.config.rpi4b .config
+make defconfig
+
+make V=sc
