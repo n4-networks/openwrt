@@ -1,9 +1,9 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=obuspa
-PKG_VERSION:=0.2
-PKG_REV:=a47fcf33effe58c62993c4737ffa1e4be791d5bb
-PKG_RELEASE:=0.2
+PKG_VERSION:=0.3
+PKG_REV:=c533f360a693429ee8a1f285422b2fed6ca32c53
+PKG_RELEASE:=0.3
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/n4-networks/obuspa.git
