@@ -1,0 +1,67 @@
+include $(TOPDIR)/rules.mk
+
+PKG_NAME:=obuspa
+PKG_VERSION:=0.3
+PKG_REV:=286db3d6fa377ceb95d58f3ad0257fc924149e9f
+PKG_RELEASE:=0.3
+
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://github.com/n4-networks/obuspa-n4.git
+PKG_HASH:=skip
+
+PKG_SOURCE_VERSION:=$(PKG_REV)
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+
+PKG_FIXUP:=autoreconf
+PKG_INSTALL:=1
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
+
+#SOURCE_DIR:=$(TOPDIR)/feeds/obuspa/
+
+include $(INCLUDE_DIR)/package.mk
+
+
+# Package definition; instructs on how and where our package will appear in the overall configuration menu ('make menuconfig')
+define Package/obuspa
+  SECTION:=n4
+  CATEGORY:=N4
+  TITLE:=USP Agent
+  DEPENDS:=$(DRV_DEPENDS) +libsqlite3 +libcurl +libcares +libopenssl +zlib +libubox +libubus +libblobmsg-json +libmosquitto
+
+  
+endef
+
+# Package description; a more verbose description on what our package does
+define Package/obuspa/description
+  A simple "USP agent" -application.
+endef
+
+# Package preparation instructions; create the build directory and copy the source code.
+# The last command is necessary to ensure our preparation instructions remain compatible with the patching system.
+define Build/Prepare
+	echo "Sachin $(PWD)"
+	mkdir -p $(PKG_BUILD_DIR)
+	#cp -r $(SOURCE_DIR)/* $(PKG_BUILD_DIR)
+	$(call Build/Prepare/Default)
+endef
+
+define Build/Configure
+	echo "Sachin configure obuspa"
+	$(call Build/Configure/Default)
+endef
+
+# Package build instructions; invoke the target-specific compiler to first compile the source file, and then to link the file into the final executable
+define Build/Compile
+	echo "Sachin Compile obuspa"
+	$(MAKE) -C $(PKG_BUILD_DIR)
+#	$(call Build/Compile/Default,compile)
+endef
+
+# Package install instructions; create a directory inside the package to hold our executable, and then copy the executable we built previously into the folder
+define Package/obuspa/install
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/obuspa $(1)/usr/bin
+endef
+
+# This command is always the last, it uses the definitions and variables we give above in order to get the job done
+$(eval $(call BuildPackage,obuspa))
