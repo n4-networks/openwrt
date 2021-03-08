@@ -1,9 +1,9 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=obuspa
-PKG_VERSION:=0.3
+PKG_VERSION:=0.4
 PKG_REV:=286db3d6fa377ceb95d58f3ad0257fc924149e9f
-PKG_RELEASE:=0.3
+PKG_RELEASE:=0.4
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/n4-networks/obuspa-n4.git
@@ -11,12 +11,14 @@ PKG_HASH:=skip
 
 PKG_SOURCE_VERSION:=$(PKG_REV)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+#PKG_SOURCE:=$(PKG_NAME).tar.gz
 
 PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
+#PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
-#SOURCE_DIR:=$(TOPDIR)/feeds/obuspa/
+SOURCE_DIR:=$(TOPDIR)/feeds/obuspa/
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -52,7 +54,7 @@ endef
 
 # Package build instructions; invoke the target-specific compiler to first compile the source file, and then to link the file into the final executable
 define Build/Compile
-	echo "Sachin Compile obuspa"
+	echo "Sachin Compile obuspa $(MAKE) -C $(PKG_BUILD_DIR)"
 	$(MAKE) -C $(PKG_BUILD_DIR)
 #	$(call Build/Compile/Default,compile)
 endef
