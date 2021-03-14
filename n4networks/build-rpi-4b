@@ -16,6 +16,7 @@ cd ../
 ./scripts/feeds install curl
 ./scripts/feeds install c-ares
 ./scripts/feeds install liblzma
+./scripts/feeds install libmosquitto
 
 mkdir -p package/feeds/obuspa
 cp n4networks/Makefile.obuspa package/feeds/obuspa/Makefile
